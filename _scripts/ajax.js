@@ -1,8 +1,25 @@
 // add global variable containing XHR object here
-
+let httpRequest = new XMLHttpRequest();
 
 // add get() function here
+function get(url,success,fail) {
+    httpRequest.open("GET",url);
+    httpRequest.onload = () => {
+        if(httpRequest.status === 200) {
+            success(httpRequest.responseText);
+        }else{
+            fail(httpRequest.status);
+        }
+    }
+    httpRequest.send();
+}
 
+function failHandler(status) {
+    console.log('Error code:',status);
+    const weatherDiv = document.querySelector('#weather');
+    weatherDiv.classList.remove('hidden');
+
+}
 
 function tempToF(kelvin) {
     return ((kelvin - 273.15) * 1.8 + 32).toFixed(0);
@@ -30,8 +47,9 @@ function successHandler(data) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    const apiKey = 'd126cacbbfebf7c84ad878e9deffc0e1';
+    const apiKey = '06ead3bed8913dd3aee92a6203bd92d9';
     const url = 'https://api.openweathermap.org/data/2.5/weather?q=los+angeles&APPID=' + apiKey;
     // add get() function call here
-    
+    get(url,successHandler,failHandler);
+    // successHandler(httpRequest.responseText); // will return an error since the data will not come back in time.
 });
