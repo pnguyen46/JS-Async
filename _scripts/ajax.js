@@ -121,19 +121,39 @@ document.addEventListener('DOMContentLoaded', function() {
     //         weatherDiv.classList.remove('hidden');
     //     });
 
-    Promise.all([get(urls[0]),get(urls[1]),get(urls[2]),get(urls[3])])
-            .then(function(responses){
-                return responses.map(function(response){
-                    return successHandler(response);
-                });
-            })
-            .then(function(literals){
-                weatherDiv.innerHTML = `<h1>Weather</h1>${literals.join('')}`;
-            })
-            .catch(function(status){
-                failHandler(status);
-            })
-            .finally(function(){
-                weatherDiv.classList.remove('hidden');
+    // Promise.all([get(urls[0]),get(urls[1]),get(urls[2]),get(urls[3])])
+    //         .then(function(responses){
+    //             return responses.map(function(response){
+    //                 return successHandler(response);
+    //             });
+    //         })
+    //         .then(function(literals){
+    //             weatherDiv.innerHTML = `<h1>Weather</h1>${literals.join('')}`;
+    //         })
+    //         .catch(function(status){
+    //             failHandler(status);
+    //         })
+    //         .finally(function(){
+    //             weatherDiv.classList.remove('hidden');
+    //         });
+
+    (async function(){
+        try {
+            let responses = [];
+            responses.push(await get(urls[0]));
+            responses.push(await get(urls[1]));
+            responses.push(await get(urls[2]));
+            responses.push(await get(urls[3]));
+    
+            let literals = responses.map(function(response){
+                return successHandler(response);
             });
+            weatherDiv.innerHTML = `<h1>Weather</h1>${literals.join('')}`;
+            // weatherDiv.classList.remove('hidden');
+        } catch (status) {
+            failHandler(status);
+        }finally{
+            weatherDiv.classList.remove('hidden');
+        }
+    })();
 });
