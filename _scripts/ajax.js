@@ -2,6 +2,12 @@
 // let httpRequest = new XMLHttpRequest();
 
 // add get() function here
+
+// function get(url){
+//     httpRequest.get('GET',url);
+//     httpRequest.send();
+// }
+
 // function get(url,success,fail) {
 //     httpRequest.open("GET",url);
 //     httpRequest.onload = () => {
@@ -38,6 +44,7 @@ function get(url){
 
 function failHandler(status) {
     console.log(status);
+
     // const weatherDiv = document.querySelector('#weather');
     // weatherDiv.classList.remove('hidden');
 
@@ -67,6 +74,7 @@ function tempToF(kelvin) {
 //     weatherDiv.innerHTML = weatherFragment;
 //     // weatherDiv.classList.remove('hidden');
 // }
+
 function successHandler(data) {
     const dataObj = JSON.parse(data);
     const div = `
@@ -104,11 +112,13 @@ document.addEventListener('DOMContentLoaded', function() {
     // const url = 'https://api.openweathermap.org/data/2.5/weather?q=los+angeles&APPID=' + apiKey;
     
     // add get() function call here
-    // get(url,successHandler,failHandler);
+
+    //synchronous model:
+    // get(url)
     // successHandler(httpRequest.responseText); // will return an error since the data will not come back in time.
-
-    // console.log(get(url));
-
+    
+    // get(url,successHandler,failHandler);
+    
     // get(url)
     //     .then(function(response){
     //         successHandler(response);
@@ -121,6 +131,8 @@ document.addEventListener('DOMContentLoaded', function() {
     //         weatherDiv.classList.remove('hidden');
     //     });
 
+    //Use to retrieve multiple locations
+    
     // Promise.all([get(urls[0]),get(urls[1]),get(urls[2]),get(urls[3])])
     //         .then(function(responses){
     //             return responses.map(function(response){
